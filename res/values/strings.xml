@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PostalWear</string>
+    <string name="sleep">go to sleep</string>
+    <string name="run">run a mile</string>
+    <string name="read">read a book</string>
+    <string name="sleeping">sleeping</string>
+    <string name="running">running</string>
+    <string name="reading">reading</string>
+</resources>
