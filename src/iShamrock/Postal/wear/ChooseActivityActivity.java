@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -28,6 +29,8 @@ public class ChooseActivityActivity extends Activity {
     private int activityStarted = -1;
     private List<String> postalWearDataStrings;
     private long startedTimeStamp;
+    private int[] activityStartedTime;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +79,6 @@ public class ChooseActivityActivity extends Activity {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             container.addView(mListViews.get(position), 0);
-
-
             return mListViews.get(position);
         }
     }
@@ -97,14 +98,24 @@ public class ChooseActivityActivity extends Activity {
         image_0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (activityStarted == -1) {
+                if (activityStarted == 1) {
                     text_0.setText(getApplicationContext().getString(R.string.read));
                     image_0.setImageDrawable(getResources().getDrawable(R.drawable.icon_book_red));
-                    startedTimeStamp = System.currentTimeMillis() / 1000;
-                } else if (activityStarted == 1) {
+
+                    activityStarted = -1;
+
+                    String castedTimeString = TimeCastUtil.getCastedTime(
+                            (System.currentTimeMillis() - startedTimeStamp) / 1000);
+                    String castedPeriodString = TimeCastUtil.getCastedPeriod(activityStartedTime);
+                    postalWearDataStrings.add("I read " + castedTimeString + castedPeriodString);
+                } else if (activityStarted == -1) {
                     text_0.setText(getApplicationContext().getString(R.string.reading));
                     image_0.setImageDrawable(getResources().getDrawable(R.drawable.icon_book_white));
-                    activityStarted = -1;
+
+                    startedTimeStamp = System.currentTimeMillis();
+                    activityStartedTime = new int[]{Calendar.HOUR, Calendar.MINUTE};
+
+                    activityStarted = 1;
                 }
             }
         });
@@ -114,13 +125,24 @@ public class ChooseActivityActivity extends Activity {
         image_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (activityStarted == -1) {
+                if (activityStarted == 0) {
                     text_1.setText(getApplicationContext().getString(R.string.sleep));
                     image_1.setImageDrawable(getResources().getDrawable(R.drawable.icon_sleeping_red));
-                } else if (activityStarted == 0) {
+
+                    String castedTimeString = TimeCastUtil.getCastedTime(
+                            (System.currentTimeMillis() - startedTimeStamp) / 1000);
+                    String castedPeriodString = TimeCastUtil.getCastedPeriod(activityStartedTime);
+                    postalWearDataStrings.add("I slept " + castedTimeString + castedPeriodString);
+
+                    activityStarted = -1;
+                } else if (activityStarted == -1) {
                     text_1.setText(getApplicationContext().getString(R.string.sleeping));
                     image_1.setImageDrawable(getResources().getDrawable(R.drawable.icon_sleeping_white));
-                    activityStarted = -1;
+
+                    startedTimeStamp = System.currentTimeMillis();
+                    activityStartedTime = new int[]{Calendar.HOUR, Calendar.MINUTE};
+
+                    activityStarted = 0;
                 }
             }
         });
@@ -130,13 +152,24 @@ public class ChooseActivityActivity extends Activity {
         image_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (activityStarted == -1) {
+                if (activityStarted == 2) {
                     text_2.setText(getApplicationContext().getString(R.string.run));
                     image_2.setImageDrawable(getResources().getDrawable(R.drawable.icon_running_red));
-                } else if (activityStarted == 2) {
+
+                    String castedTimeString = TimeCastUtil.getCastedTime(
+                            (System.currentTimeMillis() - startedTimeStamp) / 1000);
+                    String castedPeriodString = TimeCastUtil.getCastedPeriod(activityStartedTime);
+                    postalWearDataStrings.add("I ran " + castedTimeString + castedPeriodString);
+
+                    activityStarted = -1;
+                } else if (activityStarted == -1) {
                     text_2.setText(getApplicationContext().getString(R.string.running));
                     image_2.setImageDrawable(getResources().getDrawable(R.drawable.icon_running_white));
-                    activityStarted = -1;
+
+                    startedTimeStamp = System.currentTimeMillis();
+                    activityStartedTime = new int[]{Calendar.HOUR, Calendar.MINUTE};
+
+                    activityStarted = 2;
                 }
             }
         });
