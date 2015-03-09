@@ -4,14 +4,17 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -24,7 +27,8 @@ public class ChooseActivityActivity extends Activity {
     private ImageView image_0, image_1, image_2;
     private ViewPager mPager;
     private List<View> listViews;
-
+    private Socket socket;
+    private DataOutputStream fromClient;
 
     private int activityStarted = -1;
     private List<String> postalWearDataStrings;
@@ -83,10 +87,50 @@ public class ChooseActivityActivity extends Activity {
         }
     }
 
+    /*发送广播端的socket*/
+    private MulticastSocket ms;
+    /*发送广播的按钮*/
+    private Button sendUDPBrocast;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
-            Log.d("Hello", " world");
+
+            new Thread("ss") {
+                @Override
+                public void run() {
+                    try {
+            /*创建socket实例*/
+                        ms = new MulticastSocket();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    DatagramPacket dataPacket;
+
+                    String dataString = "";
+                    for (String string : postalWearDataStrings) {
+                        dataString += string;
+                    }
+                    String host = "255.255.255.255";//广播地址
+                    int port = 8003;//广播的目的端口
+                    String message = dataString;//用于发送的字符串
+                    try {
+                        InetAddress adds = InetAddress.getByName(host);
+                        DatagramSocket ds = new DatagramSocket();
+                        DatagramPacket dp = new DatagramPacket(message.getBytes(),
+                                message.length(), adds, port);
+                        ds.send(dp);
+                        ds.close();
+                    } catch (UnknownHostException e) {
+                        e.printStackTrace();
+                    } catch (SocketException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }.start();
         }
 
         return super.onKeyDown(keyCode, event);
