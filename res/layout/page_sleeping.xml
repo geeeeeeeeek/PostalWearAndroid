@@ -3,7 +3,7 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:orientation="vertical"
-              android:background="#e84e40"
+              android:background="@drawable/bg_sleeping"
               android:gravity="center">
 
     <ImageView
@@ -16,7 +16,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="40dp"
-            android:layout_marginBottom="10dp"/>
+            android:adjustViewBounds="false"/>
 
     <TextView
             android:id="@+id/txt_sleeping"
@@ -25,7 +25,7 @@
             android:gravity="center"
             android:text="@string/sleep"
             android:textColor="#fff"
-            android:textSize="22.0dip"
+            android:textSize="26dp"
             android:layout_below="@+id/img_sleeping"
             android:layout_centerHorizontal="true"
             />

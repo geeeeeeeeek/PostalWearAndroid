@@ -6,24 +6,16 @@
               android:background="#e84e40"
               android:gravity="center">
 
-    <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/splash_logo"
-            android:src="@drawable/ic_wear"
-            android:adjustViewBounds="true"
-            android:layout_margin="80dp"/>
-
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Postal Wear"
-            android:id="@+id/splash_title"
-            android:textColor="#fff"
-            android:layout_centerInParent="true"
-            android:visibility="visible"
-            android:alpha="0"
-            android:textSize="28dp"/>
+            android:text="Postal\nWear"
+            android:id="@+id/textView"
+            android:textColor="#ffffffff"
+            android:textSize="36dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:gravity="center"/>
 
 
 </RelativeLayout>
